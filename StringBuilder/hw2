@@ -1,0 +1,31 @@
+package classProjectOne;
+
+public class stringBuilderHomework {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		
+		StringBuilder lineOfCode = new StringBuilder();
+		
+		int range = (126-33) + 1;
+		int c = 0;
+
+		for (int i = 0; i < 1111; i++)
+		{
+			if (c==100)
+			{
+				lineOfCode.append("\n");
+				c=0;
+			}
+			
+			int  rChar = (int)( Math.random() * range)+ 33;
+			char aChar = (char)rChar;
+			lineOfCode.append(aChar);
+			c++;
+		
+		}
+		
+		System.out.println(lineOfCode);
+	}
+}
