@@ -30,7 +30,7 @@ public void start(Stage primaryStage) {
 			
 			if(e.getButton() == MouseButton.SECONDARY)
 			{
-			root.getChildren().remove(0);
+			root.getChildren().remove(e.getTarget());
 			}
 			
 		});
