@@ -1,0 +1,110 @@
+package application;
+	
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Polyline;
+import javafx.scene.text.Text;
+
+
+public class Main extends Application {
+	@Override
+	public void start(Stage primaryStage) {
+		Pane root = new Pane();
+		
+		Polyline carBody = new Polyline(50,225,  85,230,   135,230,    160,225,     165,220,   156,209,    125,210,   115,195,   85,198, 80,200,  60,209,   52,208,   50,215,    50, 225    );
+		carBody.setFill(Color.RED);
+		carBody.setStroke(Color.BLACK);
+		
+		Circle wheel1 = new Circle(135,230,10.5);
+		wheel1.setFill(Color.GREY);
+		wheel1.setStroke(Color.BLACK);
+		wheel1.setStrokeWidth(8);
+		wheel1.translateXProperty().bind(carBody.translateXProperty());
+
+		
+
+		Circle wheel2 = new Circle(72,228, 12);
+		wheel2.setFill(Color.GREY);
+		wheel2.setStroke(Color.BLACK);
+		wheel2.setStrokeWidth(10);
+		wheel2.translateXProperty().bind(carBody.translateXProperty());
+		
+		Line window = new Line(120.5,210,111.25,196.60);
+		window.setStroke(Color.BLACK);
+		window.setStrokeWidth(3.75);
+				
+		root.getChildren().addAll(carBody, wheel1, wheel2);
+		Scene scene = new Scene(root, 300, 300);
+		primaryStage.setTitle("Exercise 15.29");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		
+		Timeline animation = new Timeline(new KeyFrame(Duration.millis(5), e-> {
+			if(carBody.getLayoutX() < root.getWidth() ){
+				carBody.setLayoutX(carBody.getLayoutX()+1);		
+			}
+			else{
+				carBody.setLayoutX(-200);
+			}
+			if(wheel1.getCenterX() < root.getWidth() ){
+				wheel1.setCenterX(wheel1.getCenterX() + 1);		
+			}
+			else{
+				wheel1.setCenterX(-200);
+			}
+			if(wheel2.getCenterX() < root.getWidth() ){
+				wheel2.setCenterX(wheel2.getCenterX() + 1);		
+			}
+			else{
+				wheel2.setCenterX(-200);
+			}
+		}));
+	
+		
+		root.setOnMouseClicked(e -> {
+			
+			if(animation.getStatus() == Animation.Status.PAUSED){
+				animation.play();	
+			}
+			else{
+				animation.pause();
+			}
+						
+		});
+		
+		root.setOnKeyPressed(e ->
+		{
+			
+			switch(e.getCode()){
+			
+			case DOWN: 
+				if(animation.getRate() <= 0)break;
+				
+			else{animation.setRate(animation.getRate() - 1);  break;}
+			
+			case UP:  animation.setRate(animation.getRate()+ 1 ); break;	
+			
+			}});
+		
+		animation.setCycleCount(Timeline.INDEFINITE);
+		animation.play();
+		root.requestFocus();
+		
+		
+		}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+}
