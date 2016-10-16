@@ -1,0 +1,57 @@
+package application;
+	
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+
+
+public class Main extends Application {
+	static double x = 50, y = 50, r =  Math.random()*2;
+	@Override
+	public void start(Stage primaryStage) {
+
+		Pane root = new Pane();
+		
+		Circle cir = new Circle(3);
+		cir.setFill(Color.RED);
+		
+
+
+		
+		Timeline animation = new Timeline(new KeyFrame(Duration.millis(100), e-> {
+			
+			Line line = new Line(x -= Math.random()*2 , y-= Math.random()*2, x+= Math.random()*2, y += Math.random()*2);
+			line.setFill(Color.BLACK);
+			line.setOpacity(0.1);
+			root.getChildren().add(line);
+			
+			cir.setCenterX(x);
+			cir.setCenterY(y);
+		}));
+		
+		animation.setCycleCount(Timeline.INDEFINITE);
+		animation.play();
+			
+		root.getChildren().addAll(cir);
+		
+		
+				
+		Scene scene = new Scene(root, 100,100);
+		primaryStage.setTitle("Random Path");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		
+	}
+	public static void main(String[] args) {
+		launch(args);
+	}
+}
